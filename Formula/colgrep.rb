@@ -35,10 +35,8 @@ class Colgrep < Formula
   depends_on "rust" => :build
 
   def install
-    if resources.key?("binary")
-      binary_installed = install_prebuilt_binary
-      return if binary_installed
-    end
+    binary_installed = install_prebuilt_binary
+    return if binary_installed
 
     ohai "No prebuilt binary available, building from source..."
     install_from_source
@@ -58,6 +56,8 @@ class Colgrep < Formula
         return true
       end
     end
+    false
+  rescue Homebrew::Resource::Missing
     false
   rescue => e
     opoo "Failed to install prebuilt binary (#{e.message}), falling back to source build"
