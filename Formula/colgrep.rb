@@ -4,20 +4,20 @@ class Colgrep < Formula
   version "1.0.8"
   license "MIT"
 
-  url "https://github.com/lightonai/next-plaid/archive/refs/tags/v#{version}.tar.gz"
+  url "https://github.com/lightonai/next-plaid/archive/refs/tags/v1.0.8.tar.gz"
   sha256 "c2abd04683d9e0ed30e7fb29b3e8d09cdc83863ada52d69e938ec1d2dc3153fa"
 
   on_macos do
     on_arm do
       resource "binary" do
-        url "https://github.com/lightonai/next-plaid/releases/download/v#{version}/colgrep-aarch64-apple-darwin.tar.xz"
+        url "https://github.com/lightonai/next-plaid/releases/download/v1.0.8/colgrep-aarch64-apple-darwin.tar.xz"
         sha256 "a81ffd067428548dfb384224f98a35ef4c8e828f923562acef1e6d5fe1544517"
       end
     end
 
     on_intel do
       resource "binary" do
-        url "https://github.com/lightonai/next-plaid/releases/download/v#{version}/colgrep-x86_64-apple-darwin.tar.xz"
+        url "https://github.com/lightonai/next-plaid/releases/download/v1.0.8/colgrep-x86_64-apple-darwin.tar.xz"
         sha256 "9cf9dbcf1840bd8227ac64596aa6a4733a7b6b10498820c5b9307e4a0df641b6"
       end
     end
@@ -26,7 +26,7 @@ class Colgrep < Formula
   on_linux do
     on_intel do
       resource "binary" do
-        url "https://github.com/lightonai/next-plaid/releases/download/v#{version}/colgrep-x86_64-unknown-linux-gnu.tar.xz"
+        url "https://github.com/lightonai/next-plaid/releases/download/v1.0.8/colgrep-x86_64-unknown-linux-gnu.tar.xz"
         sha256 "d397ce5cc5928fd4d762eeecbb0629f9c7689ab1e71ec7403c21218ae0612b27"
       end
     end
