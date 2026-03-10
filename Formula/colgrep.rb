@@ -4,11 +4,9 @@ class Colgrep < Formula
   version "1.0.8"
   license "MIT"
 
-  # Source tarball (used for building from source as fallback)
   url "https://github.com/lightonai/next-plaid/archive/refs/tags/v#{version}.tar.gz"
   sha256 "c2abd04683d9e0ed30e7fb29b3e8d09cdc83863ada52d69e938ec1d2dc3153fa"
 
-  # Prebuilt binaries per platform
   on_macos do
     on_arm do
       resource "binary" do
@@ -34,17 +32,14 @@ class Colgrep < Formula
     end
   end
 
-  # Rust is only needed when building from source (no prebuilt binary available)
   depends_on "rust" => :build
 
   def install
-    # Try to use prebuilt binary first
     if resources.key?("binary")
       binary_installed = install_prebuilt_binary
       return if binary_installed
     end
 
-    # Fall back to building from source
     ohai "No prebuilt binary available, building from source..."
     install_from_source
   end
@@ -57,7 +52,6 @@ class Colgrep < Formula
 
   def install_prebuilt_binary
     resource("binary").stage do
-      # Binary is inside a directory named colgrep-{target}/
       binary = Dir["*/colgrep"].first
       if binary && File.exist?(binary)
         bin.install binary
