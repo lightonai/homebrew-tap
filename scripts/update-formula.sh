@@ -9,11 +9,6 @@ FORMULA="Formula/colgrep.rb"
 
 echo "Updating formula to v${VERSION}..."
 
-# Fetch SHA256 for source tarball
-echo "Fetching source tarball SHA..."
-SOURCE_SHA=$(curl -sL "https://github.com/${REPO}/archive/refs/tags/v${VERSION}.tar.gz" | shasum -a 256 | awk '{print $1}')
-echo "  Source: ${SOURCE_SHA}"
-
 # Fetch SHA256 for each binary asset
 fetch_binary_sha() {
   local asset="$1"
@@ -38,85 +33,31 @@ class Colgrep < Formula
   version "${VERSION}"
   license "MIT"
 
-  # Source tarball (used for building from source as fallback)
-  url "https://github.com/${REPO}/archive/refs/tags/v#{version}.tar.gz"
-  sha256 "${SOURCE_SHA}"
-
-  # Prebuilt binaries per platform
   on_macos do
     on_arm do
-      resource "binary" do
-        url "https://github.com/${REPO}/releases/download/v#{version}/colgrep-aarch64-apple-darwin.tar.xz"
-        sha256 "${AARCH64_DARWIN_SHA}"
-      end
+      url "https://github.com/${REPO}/releases/download/v${VERSION}/colgrep-aarch64-apple-darwin.tar.xz"
+      sha256 "${AARCH64_DARWIN_SHA}"
     end
 
     on_intel do
-      resource "binary" do
-        url "https://github.com/${REPO}/releases/download/v#{version}/colgrep-x86_64-apple-darwin.tar.xz"
-        sha256 "${X86_64_DARWIN_SHA}"
-      end
+      url "https://github.com/${REPO}/releases/download/v${VERSION}/colgrep-x86_64-apple-darwin.tar.xz"
+      sha256 "${X86_64_DARWIN_SHA}"
     end
   end
 
   on_linux do
     on_intel do
-      resource "binary" do
-        url "https://github.com/${REPO}/releases/download/v#{version}/colgrep-x86_64-unknown-linux-gnu.tar.xz"
-        sha256 "${X86_64_LINUX_SHA}"
-      end
+      url "https://github.com/${REPO}/releases/download/v${VERSION}/colgrep-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "${X86_64_LINUX_SHA}"
     end
   end
 
-  # Rust is only needed when building from source (no prebuilt binary available)
-  depends_on "rust" => :build
-
   def install
-    # Try to use prebuilt binary first
-    if resources.key?("binary")
-      binary_installed = install_prebuilt_binary
-      return if binary_installed
-    end
-
-    # Fall back to building from source
-    ohai "No prebuilt binary available, building from source..."
-    install_from_source
+    bin.install "colgrep"
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/colgrep --version")
-  end
-
-  private
-
-  def install_prebuilt_binary
-    resource("binary").stage do
-      # Binary is inside a directory named colgrep-{target}/
-      binary = Dir["*/colgrep"].first
-      if binary && File.exist?(binary)
-        bin.install binary
-        return true
-      end
-    end
-    false
-  rescue => e
-    opoo "Failed to install prebuilt binary (#{e.message}), falling back to source build"
-    false
-  end
-
-  def install_from_source
-    features = []
-
-    if OS.mac?
-      features << "accelerate"
-      features << "coreml" if Hardware::CPU.arm?
-    end
-
-    args = ["--release", "-p", "colgrep"]
-    args += ["--features", features.join(",")] unless features.empty?
-
-    system "cargo", "build", *args
-    bin.install "target/release/colgrep"
   end
 end
 RUBY
