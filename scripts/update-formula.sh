@@ -31,7 +31,7 @@ class Colgrep < Formula
   desc "Semantic code search powered by ColBERT"
   homepage "https://github.com/${REPO}"
   version "${VERSION}"
-  license "MIT"
+  license "Apache-2.0"
 
   on_macos do
     on_arm do
