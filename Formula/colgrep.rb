@@ -1,25 +1,25 @@
 class Colgrep < Formula
   desc "Semantic code search powered by ColBERT"
   homepage "https://github.com/lightonai/next-plaid"
-  version "1.5.3"
+  version "1.5.4"
   license "Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/lightonai/next-plaid/releases/download/v1.5.3/colgrep-aarch64-apple-darwin.tar.xz"
-      sha256 "0c59a1682e82f8b778c57da3c031f0abcad20e1ec444f64634470bf2fcdaec62"
+      url "https://github.com/lightonai/next-plaid/releases/download/v1.5.4/colgrep-aarch64-apple-darwin.tar.xz"
+      sha256 "4c26a89a4f540ef54250dec023b76f42fd5379a9de50559d04b4e4f489afb6fc"
     end
 
     on_intel do
-      url "https://github.com/lightonai/next-plaid/releases/download/v1.5.3/colgrep-x86_64-apple-darwin.tar.xz"
-      sha256 "707ba9494e17404029a70d8cbac6404510fdcfd44f52f96e2258cd3dc865db47"
+      url "https://github.com/lightonai/next-plaid/releases/download/v1.5.4/colgrep-x86_64-apple-darwin.tar.xz"
+      sha256 "35bdaf58d73fa59ce37e7b271c66d3c41521619d4e3d770ae8b6f9ad6b891bb9"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/lightonai/next-plaid/releases/download/v1.5.3/colgrep-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "1b2f1ad8ff5dab87cd3d43ad446d42b721504bb05366513b3c9da57cba5a17e5"
+      url "https://github.com/lightonai/next-plaid/releases/download/v1.5.4/colgrep-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "0aef6d21b05f7a9f2f822ed0b51ca97023926ac134c9ba0a7a2ebf510d7412e0"
     end
   end
 
